@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class InProgressPuzzleState : IPuzzleState
 {
     private readonly IPuzzle _puzzle;
@@ -10,16 +8,6 @@ public class InProgressPuzzleState : IPuzzleState
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Update()
-    {
-        throw new System.NotImplementedException();
+        _puzzle.Enable();
     }
 }

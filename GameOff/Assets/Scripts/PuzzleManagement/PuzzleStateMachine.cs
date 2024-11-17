@@ -1,38 +1,29 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class PuzzleStateMachine
 {
     public IPuzzleState CurrentState { get; private set; }
-    private readonly InactivePuzzleState _inactiveState;
-    private readonly InProgressPuzzleState _inProgressState;
-    private readonly CompletedPuzzleState _completedPuzzleState;
+    public InactivePuzzleState InactiveState { get; }
+    public InProgressPuzzleState InProgressState { get; }
+    public CompletedPuzzleState CompletedPuzzleState { get; }
     
     public PuzzleStateMachine(IPuzzle puzzle)
     {
-        this._inactiveState = new InactivePuzzleState(puzzle);
-        this._inProgressState = new InProgressPuzzleState(puzzle);
-        this._completedPuzzleState = new CompletedPuzzleState(puzzle);
+        this.InactiveState = new InactivePuzzleState(puzzle);
+        this.InProgressState = new InProgressPuzzleState(puzzle);
+        this.CompletedPuzzleState = new CompletedPuzzleState(puzzle);
     }
 
-    public void Initialize(IPuzzleState startingState)
+    public void Initialize()
     {
-        CurrentState = startingState;
-        startingState.Enter();
+        CurrentState = InactiveState;
+        InactiveState.Enter();
     }
+
     public void TransitionTo(IPuzzleState nextState)
     {
-        CurrentState.Exit();
         CurrentState = nextState;
         nextState.Enter();
     }
-    public void Update()
-    {
-        CurrentState?.Update();
-    }
-}
-
-public interface IPuzzle
-{
 }

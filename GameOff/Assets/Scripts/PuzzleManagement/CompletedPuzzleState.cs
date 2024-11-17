@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class CompletedPuzzleState : IPuzzleState
 {
     private readonly IPuzzle _puzzle;
@@ -10,16 +8,7 @@ public class CompletedPuzzleState : IPuzzleState
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void Exit()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Update()
-    {
-        throw new System.NotImplementedException();
+        _puzzle.Disable();
+        // publish completed state
     }
 }

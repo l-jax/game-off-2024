@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour, IRotatable
+public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
 {
-    public bool AtTargetRotation => _currentStep == _targetStep;
+    public event Action OnTargetReached;
+
+    public bool AtTarget { get => _currentStep == _targetStep; }
 
     [SerializeField]
     private Axis _axis = Axis.X;
@@ -18,6 +20,12 @@ public class Wheel : MonoBehaviour, IRotatable
 
     private int _currentStep = 0;
 
+    private Quaternion _startRotation;
+
+    public void Awake() {
+        _startRotation = transform.rotation;
+    }
+
     public void OnValidate()
     {
         if (_targetStep >= _stepsForFullRotation) {
@@ -26,11 +34,10 @@ public class Wheel : MonoBehaviour, IRotatable
     }
 
     public void OnMouseDown() {
-        // debug
-        Rotate();
+        Step();
     }
 
-    public void Rotate()
+    public void Step()
     {
         float stepAngle = 360f/_stepsForFullRotation;
 
@@ -47,5 +54,15 @@ public class Wheel : MonoBehaviour, IRotatable
         }
 
         _currentStep = (_currentStep + 1) % _stepsForFullRotation;
+
+        if (AtTarget) {
+            OnTargetReached?.Invoke();
+        }
+    }
+
+    public void Reset()
+    {
+        transform.rotation = _startRotation;
+        _currentStep = 0;
     }
 }
