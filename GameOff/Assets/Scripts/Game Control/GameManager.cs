@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
         _puzzleActiveState = new PuzzleActiveState(this);
         _puzzleCompleteState = new PuzzleCompleteState(this);
 
-        _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>());
+        _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>().Reverse());
 
         Initialise();
     }
