@@ -1,13 +1,24 @@
+using System.Linq;
+
 public class InProgressPuzzleState : IPuzzleState
 {
-    private readonly IPuzzle _puzzle;
+    private IPuzzle _puzzle;
 
-    public InProgressPuzzleState(IPuzzle puzzle) {
-        this._puzzle = puzzle;
+    public void Enter(IPuzzle puzzle)
+    {
+        _puzzle = puzzle;
+        puzzle.PuzzleComponents.ForEach(p => p.OnTargetReached += Check);
+        puzzle.PuzzleComponents.ForEach(p => p.SetEnabled(true));
     }
 
-    public void Enter()
+
+    public void Check() 
     {
-        _puzzle.Enable();
+        if (!_puzzle.PuzzleComponents.All(puzzleComponents => puzzleComponents.AtTarget)) {
+            return;
+        }
+
+        _puzzle.PuzzleComponents.ForEach(p => p.OnTargetReached -= Check);
+        _puzzle.SetCompleted();
     }
 }

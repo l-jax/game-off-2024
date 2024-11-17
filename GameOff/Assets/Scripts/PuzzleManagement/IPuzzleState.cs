@@ -1,4 +1,4 @@
 public interface IPuzzleState
 {
-    public void Enter();
+    public void Enter(IPuzzle puzzle);
 }

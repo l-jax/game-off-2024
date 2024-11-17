@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState {
     Start,
-    PuzzleActive,
-    PuzzleComplete,
-    Win,
-    Lose
+    Active,
+    Win
 }
 
 public class GameManager : MonoBehaviour
@@ -18,12 +15,11 @@ public class GameManager : MonoBehaviour
 
     public GameState State { get; private set;} = GameState.Start;
 
-    [SerializeField]
-    private readonly List<IPuzzle> _puzzles;
-    private int _currentPuzzle = 0;
+    public IPuzzle Puzzle { get; private set; }
 
     public void Awake() {
         Instance = this;
+        Puzzle = this.GetComponent<IPuzzle>();
     }
 
     public void UpdateGameState(GameState state) {
@@ -33,28 +29,20 @@ public class GameManager : MonoBehaviour
 
         switch(state) {
             case GameState.Start:
-                // TODO: start the game
+                
             break;
-            case GameState.PuzzleActive:
-                _currentPuzzle ++;
-                _puzzles[_currentPuzzle].PuzzleStateMachine.Initialize();
-            break;
-            case GameState.PuzzleComplete:
-                // TODO: complete the current puzzle, check if win/lose condition met
-                if (_currentPuzzle +1 == _puzzles.Count) {
-                    // this was the last puzzle
-                }
+            case GameState.Active:
+                Puzzle.OnComplete += OnPuzzleComplete;
             break;
             case GameState.Win:
-                // TODO: finish the game and display win
+                Puzzle.OnComplete -= OnPuzzleComplete;
             break;
-            case GameState.Lose:
-                // TODO: finish the game and display lose
-            break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state));
         }
 
         OnGameStateChanged?.Invoke(state);
+    }
+
+    private void OnPuzzleComplete(IPuzzle puzzle) {
+        UpdateGameState(GameState.Win);
     }
 }

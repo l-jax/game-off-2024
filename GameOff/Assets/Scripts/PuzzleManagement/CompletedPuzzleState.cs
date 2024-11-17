@@ -1,14 +1,7 @@
 public class CompletedPuzzleState : IPuzzleState
 {
-    private readonly IPuzzle _puzzle;
-
-    public CompletedPuzzleState(IPuzzle puzzle) {
-        this._puzzle = puzzle;
-    }
-
-    public void Enter()
+    public void Enter(IPuzzle puzzle)
     {
-        _puzzle.Disable();
-        // publish completed state
+        puzzle.PuzzleComponents.ForEach(p => p.SetEnabled(false));
     }
 }

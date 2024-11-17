@@ -1,49 +1,39 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public abstract class Puzzle : MonoBehaviour, IPuzzle
+public class PuzzleManager : MonoBehaviour, IPuzzle
 {
-    public PuzzleStateMachine PuzzleStateMachine { get; private set; }
-
-    [SerializeField]
-    private readonly List<IPuzzleComponent> _puzzleComponents = new();
+    public IPuzzleState CurrentState { get; private set; }
+    public InactivePuzzleState InactiveState { get; private set; }
+    public InProgressPuzzleState InProgressState { get; private set; }
+    public CompletedPuzzleState CompletedPuzzleState { get; private set; }
+    public List<IPuzzleComponent> PuzzleComponents { get; }
+    public event Action<IPuzzle> OnComplete;
 
     public void Start() {
-        PuzzleStateMachine = new PuzzleStateMachine(this);
-        PuzzleStateMachine.Initialize();
+        this.InactiveState = new InactivePuzzleState();
+        this.InProgressState = new InProgressPuzzleState();
+        this.CompletedPuzzleState = new CompletedPuzzleState();
+
+        Initialize();
+    }
+
+    public void SetCompleted() {
+        TransitionTo(CompletedPuzzleState);
+        OnComplete?.Invoke(this);
+    }
+
+    private void Initialize()
+    {
+        CurrentState = InactiveState;
+        InactiveState.Enter(this);
         Debug.Log("Puzzle initialised");
     }
 
-    public void Enable()
+    private void TransitionTo(IPuzzleState nextState)
     {
-        _puzzleComponents.ForEach(p => p.OnTargetReached += Check);
-        _puzzleComponents.ForEach(p => p.SetEnabled(true));
-        Debug.Log("Puzzle enabled");
-    }
-
-    public void Disable()
-    {
-        _puzzleComponents.ForEach(p => p.OnTargetReached -= Check);
-        _puzzleComponents.ForEach(p => p.SetEnabled(false));
-        Debug.Log("Puzzle disabled");
-    }
-
-    public void Check() 
-    {
-        Debug.Log("Checking Puzzle");
-        if (!_puzzleComponents.All(_puzzleComponents => _puzzleComponents.AtTarget)) {
-            Debug.Log($"Puzzle incomplete. { _puzzleComponents.Count(_puzzleComponents => _puzzleComponents.AtTarget) } of { _puzzleComponents.Count } components at target");
-            return;
-        }
-
-        Debug.Log("All components at target. Transitioning puzzle to completed state.");
-        PuzzleStateMachine.TransitionTo(PuzzleStateMachine.CompletedPuzzleState);
-    }
-
-    public void Reset()
-    {
-        _puzzleComponents.ForEach(p => p.Reset());
-        Debug.Log("Puzzle reset");
+        CurrentState = nextState;
+        nextState.Enter(this);
     }
 }
