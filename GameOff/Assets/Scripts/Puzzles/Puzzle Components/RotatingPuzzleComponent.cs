@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
 {
     public event Action OnTargetReached;
