@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     public IGameState CurrentGameState { get; private set; }
     public IPuzzle CurrentPuzzle { get; private set; }
 
+    private Stack<IPuzzle> _puzzles;
     private StartState _startState;
     private PuzzleActiveState _puzzleActiveState;
     private PuzzleCompleteState _puzzleCompleteState;
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
         _endState = new EndState(this);
         _puzzleActiveState = new PuzzleActiveState(this);
         _puzzleCompleteState = new PuzzleCompleteState(this);
+
+        _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>());
 
         Initialise();
     }
@@ -50,17 +54,19 @@ public class GameManager : MonoBehaviour
 
     internal void NextPuzzleOrEndGame()
     {
-        // if current puzzle is last puzzle
-        TransitionTo(_endState);
-
-        // else
-        // currentPuzzle = nextPuzzle
-        // TransitionTo(_puzzleActiveState)
+        if (_puzzles.Count == 0) {
+            TransitionTo(_endState);
+        } 
+        else {
+            CurrentPuzzle = _puzzles.Pop();
+            TransitionTo(_puzzleActiveState);
+        }
     }
 
     private void Initialise()
     {
         CurrentGameState = _startState;
+        CurrentPuzzle = _puzzles.Pop();
         _startState.Enter();
         Debug.Log("Game Initialised");
     }

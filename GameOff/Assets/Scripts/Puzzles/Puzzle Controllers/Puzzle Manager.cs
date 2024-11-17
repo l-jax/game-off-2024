@@ -6,21 +6,23 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour, IPuzzle
 {
     public event Action<IPuzzle> OnComplete;
-    public string Name { get => "TEST"; }
-    public List<IPuzzleComponent> PuzzleComponents { get => _puzzleComponents.ToList(); }
+    public string Name { get => gameObject.name; }
+    public List<IPuzzleComponent> PuzzleComponents { get; } = new();
     public IPuzzleState CurrentState { get; private set; }
     public InactivePuzzleState InactiveState { get; private set; }
     public InProgressPuzzleState InProgressState { get; private set; }
     public CompletedPuzzleState CompletedPuzzleState { get; private set; }
-
-    [SerializeReference]
-    private IPuzzleComponent[] _puzzleComponents;
 
     public void Start()
     {
         this.InactiveState = new InactivePuzzleState();
         this.InProgressState = new InProgressPuzzleState();
         this.CompletedPuzzleState = new CompletedPuzzleState();
+
+        GameObject.FindGameObjectsWithTag(Name).ToList()
+            .ForEach(g => PuzzleComponents.Add(g.GetComponent<IPuzzleComponent>()));
+
+        Debug.Log($"Found { PuzzleComponents.Count } components for puzzle { Name }");
 
         Initialize();
     }

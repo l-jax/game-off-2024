@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 1221754941}
   m_Layer: 0
   m_Name: Puzzle Component 2
-  m_TagString: Untagged
+  m_TagString: Puzzle1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 2015544057}
   - component: {fileID: 2015544058}
   m_Layer: 0
-  m_Name: Puzzle
+  m_Name: Puzzle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 2042048875}
   m_Layer: 0
   m_Name: Puzzle Component 1
-  m_TagString: Untagged
+  m_TagString: Puzzle1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
