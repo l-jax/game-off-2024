@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
         _endState = new EndState(this);
         _puzzleActiveState = new PuzzleActiveState(this);
         _puzzleCompleteState = new PuzzleCompleteState(this);
+
+        Initialise();
     }
 
     public void Update() 
@@ -54,6 +56,13 @@ public class GameManager : MonoBehaviour
         // else
         // currentPuzzle = nextPuzzle
         // TransitionTo(_puzzleActiveState)
+    }
+
+    private void Initialise()
+    {
+        CurrentGameState = _startState;
+        _startState.Enter();
+        Debug.Log("Game Initialised");
     }
 
     private void TransitionTo(IGameState nextState)
