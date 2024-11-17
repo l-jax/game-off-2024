@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour, IPuzzle
 {
-    public String Name { get => "TEST"; }
+    public string Name { get => "TEST"; }
     public List<IPuzzleComponent> PuzzleComponents { get; private set; }
     public IPuzzleState CurrentState { get; private set; }
     public InactivePuzzleState InactiveState { get; private set; }
@@ -13,7 +13,8 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
     public CompletedPuzzleState CompletedPuzzleState { get; private set; }
     public event Action<IPuzzle> OnComplete;
 
-    public void Start() {
+    public void Start()
+    {
         this.InactiveState = new InactivePuzzleState();
         this.InProgressState = new InProgressPuzzleState();
         this.CompletedPuzzleState = new CompletedPuzzleState();
@@ -23,13 +24,15 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
         Initialize();
     }
 
-    public void SetCompleted() {
+    public void SetCompleted()
+    {
         TransitionTo(CompletedPuzzleState);
         Debug.Log("Puzzle complete");
         OnComplete?.Invoke(this);
     }
 
-    public void StartPuzzle(){
+    public void StartPuzzle()
+    {
         TransitionTo(InProgressState);
     }
 

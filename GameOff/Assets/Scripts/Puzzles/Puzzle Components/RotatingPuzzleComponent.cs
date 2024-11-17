@@ -8,17 +8,21 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
 
     [SerializeField]
     private Axis _axis = Axis.X;
+
     [SerializeField]
     [Min(1)]
     private int _stepsForFullRotation = 4;
+    
     [SerializeField]
     [Min(0)]
     private int _targetStep = 0;
+    
     private int _currentStep = 0;
     private Quaternion _startRotation;
     private bool _enabled;
 
-    public void Awake() {
+    public void Awake()
+    {
         _startRotation = transform.rotation;
     }
 
@@ -29,7 +33,8 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
         }
     }
 
-    public void OnMouseDown() {
+    public void OnMouseDown()
+    {
         if (_enabled) {
             Step();
         }
