@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour, IPuzzle
 {
+    public String Name { get => "TEST"; }
     public List<IPuzzleComponent> PuzzleComponents { get; private set; }
     public IPuzzleState CurrentState { get; private set; }
     public InactivePuzzleState InactiveState { get; private set; }
