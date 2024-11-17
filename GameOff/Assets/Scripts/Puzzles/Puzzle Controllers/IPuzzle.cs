@@ -5,5 +5,6 @@ public interface IPuzzle
 {
     event Action<IPuzzle> OnComplete;
     List<IPuzzleComponent> PuzzleComponents { get; }
+    void StartPuzzle();
     void SetCompleted();
 }

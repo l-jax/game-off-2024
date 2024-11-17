@@ -53,6 +53,8 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
 
         _currentStep = (_currentStep + 1) % _stepsForFullRotation;
 
+        Debug.Log($"Puzzle component at step { _currentStep } target is { _targetStep }");
+
         if (AtTarget) {
             OnTargetReached?.Invoke();
         }

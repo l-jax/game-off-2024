@@ -19,7 +19,14 @@ public class GameManager : MonoBehaviour
 
     public void Awake() {
         Instance = this;
-        Puzzle = this.GetComponent<IPuzzle>();
+        Puzzle = GetComponentInChildren<IPuzzle>();
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log("Starting puzzle");
+            UpdateGameState(GameState.Active);
+        }
     }
 
     public void UpdateGameState(GameState state) {
@@ -33,6 +40,7 @@ public class GameManager : MonoBehaviour
             break;
             case GameState.Active:
                 Puzzle.OnComplete += OnPuzzleComplete;
+                Puzzle.StartPuzzle();
             break;
             case GameState.Win:
                 Puzzle.OnComplete -= OnPuzzleComplete;
