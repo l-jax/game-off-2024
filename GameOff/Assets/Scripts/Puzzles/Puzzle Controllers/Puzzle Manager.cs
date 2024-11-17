@@ -15,9 +15,9 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
 
     public void Start()
     {
-        this.InactiveState = new InactivePuzzleState();
-        this.InProgressState = new InProgressPuzzleState();
-        this.CompletedPuzzleState = new CompletedPuzzleState();
+        this.InactiveState = new InactivePuzzleState(this);
+        this.InProgressState = new InProgressPuzzleState(this);
+        this.CompletedPuzzleState = new CompletedPuzzleState(this);
 
         GameObject.FindGameObjectsWithTag(Name).ToList()
             .ForEach(g => PuzzleComponents.Add(g.GetComponent<IPuzzleComponent>()));
@@ -42,7 +42,7 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
     private void Initialize()
     {
         CurrentState = InactiveState;
-        InactiveState.Enter(this);
+        InactiveState.Enter();
         Debug.Log("Puzzle initialised");
     }
 
@@ -50,6 +50,6 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
     {
         Debug.Log($"Updating puzzle state from { CurrentState } to { nextState }");
         CurrentState = nextState;
-        nextState.Enter(this);
+        nextState.Enter();
     }
 }

@@ -1,7 +1,14 @@
 public class InactivePuzzleState : IPuzzleState
 {
-    public void Enter(IPuzzle puzzle)
+    private readonly IPuzzle _puzzle;
+
+    public InactivePuzzleState(IPuzzle puzzle)
     {
-        puzzle.PuzzleComponents.ForEach(p => p.Reset());
+        _puzzle = puzzle;
+    }
+
+    public void Enter()
+    {
+        _puzzle.PuzzleComponents.ForEach(p => p.Reset());
     }
 }

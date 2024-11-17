@@ -1,7 +1,13 @@
 public class CompletedPuzzleState : IPuzzleState
 {
-    public void Enter(IPuzzle puzzle)
+    private readonly IPuzzle _puzzle;
+    
+    public CompletedPuzzleState(IPuzzle puzzle)
     {
-        puzzle.PuzzleComponents.ForEach(p => p.SetEnabled(false));
+        _puzzle = puzzle;
+    }
+    public void Enter()
+    {
+        _puzzle.PuzzleComponents.ForEach(p => p.SetEnabled(false));
     }
 }
