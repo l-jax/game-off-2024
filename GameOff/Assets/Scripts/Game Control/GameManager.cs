@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
     public IGameState CurrentGameState { get; private set; }
     public IPuzzle CurrentPuzzle { get; private set; }
 
@@ -14,15 +15,16 @@ public class GameManager : MonoBehaviour
     private PuzzleActiveState _puzzleActiveState;
     private PuzzleCompleteState _puzzleCompleteState;
     private EndState _endState;
+    private LoseState _loseState;
 
     public void Awake()
     {
         Instance = this;
-        CurrentPuzzle = GetComponentInChildren<IPuzzle>();
 
         _startState = new StartState(this);
         _endState = new EndState(this);
-        _puzzleActiveState = new PuzzleActiveState(this);
+        _loseState = new LoseState(this);
+        _puzzleActiveState = new PuzzleActiveState(this, GetComponentInChildren<TimeDisplay>());
         _puzzleCompleteState = new PuzzleCompleteState(this);
 
         _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>().Reverse());
@@ -62,6 +64,12 @@ public class GameManager : MonoBehaviour
             CurrentPuzzle = _puzzles.Pop();
             TransitionTo(_puzzleActiveState);
         }
+    }
+
+    internal void TimeUp()
+    {
+        CurrentGameState = _loseState;
+        Debug.Log("Time has run out");
     }
 
     private void Initialise()
