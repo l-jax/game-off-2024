@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class TimeDisplay : MonoBehaviour
 {
-    private TextMeshProUGUI _timeText;
+    private TextMeshPro _timeText;
 
     public void Awake()
     {
-        _timeText = GetComponent<TextMeshProUGUI>();
+        _timeText = GetComponent<TextMeshPro>();
     }
 
     public void DisplayTime(float timeToDisplay)
