@@ -1,13 +1,13 @@
 using System.Linq;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour 
+public class AnimationController : MonoBehaviour 
 {
-    private Camera _mainCamera;
+    private Animation _animation;
 
     public void Start()
     {
-        _mainCamera = Camera.main;
+        _animation = GetComponent<Animation>();
 
         GetComponentsInChildren<IPuzzle>().ToList()
             .ForEach(puzzle => puzzle.OnStart += OnPuzzleStart);
@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     private void OnPuzzleStart(IPuzzle puzzle)
     {
-        _mainCamera.transform.SetPositionAndRotation(puzzle.EmptyCameraTransform.position, puzzle.EmptyCameraTransform.rotation);
+        _animation.Play(puzzle.Name);
         puzzle.OnStart -= OnPuzzleStart;
     }
 }
