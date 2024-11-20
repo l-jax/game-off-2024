@@ -5,19 +5,27 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour, IPuzzle
 {
+    public event Action<IPuzzle> OnStart;
     public event Action<IPuzzle> OnComplete;
+
     public string Name { get => gameObject.name; }
+    public Transform EmptyCameraTransform { get => _emptyCameraTransform; }
+
     public List<IPuzzleComponent> PuzzleComponents { get; } = new();
+
     public IPuzzleState CurrentState { get; private set; }
     public InactivePuzzleState InactiveState { get; private set; }
     public InProgressPuzzleState InProgressState { get; private set; }
     public CompletedPuzzleState CompletedPuzzleState { get; private set; }
 
+    [SerializeField]
+    private Transform _emptyCameraTransform;
+
     public void Start()
     {
-        this.InactiveState = new InactivePuzzleState(this);
-        this.InProgressState = new InProgressPuzzleState(this);
-        this.CompletedPuzzleState = new CompletedPuzzleState(this);
+        InactiveState = new InactivePuzzleState(this);
+        InProgressState = new InProgressPuzzleState(this);
+        CompletedPuzzleState = new CompletedPuzzleState(this);
 
         GameObject.FindGameObjectsWithTag(Name).ToList()
             .ForEach(g => PuzzleComponents.Add(g.GetComponent<IPuzzleComponent>()));
@@ -37,6 +45,7 @@ public class PuzzleManager : MonoBehaviour, IPuzzle
     public void StartPuzzle()
     {
         TransitionTo(InProgressState);
+        OnStart?.Invoke(this);
     }
 
     private void Initialize()
