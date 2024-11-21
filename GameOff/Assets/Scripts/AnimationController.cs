@@ -10,12 +10,12 @@ public class AnimationController : MonoBehaviour
         _animation = GetComponent<Animation>();
 
         GetComponentsInChildren<IPuzzle>().ToList()
-            .ForEach(puzzle => puzzle.OnStart += OnPuzzleStart);
+            .ForEach(puzzle => puzzle.OnComplete += OnPuzzleComplete);
     }
 
-    private void OnPuzzleStart(IPuzzle puzzle)
+    private void OnPuzzleComplete(IPuzzle puzzle)
     {
         _animation.Play(puzzle.Name);
-        puzzle.OnStart -= OnPuzzleStart;
+        puzzle.OnStart -= OnPuzzleComplete;
     }
 }
