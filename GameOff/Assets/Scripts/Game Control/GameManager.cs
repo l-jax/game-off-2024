@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         _startState = new StartState(this);
         _endState = new EndState(this);
         _loseState = new LoseState(this);
-        _puzzleActiveState = new PuzzleActiveState(this, GetComponentInChildren<TimeDisplay>());
+        _puzzleActiveState = new PuzzleActiveState(this, GetComponent<TimeDisplay>());
         _puzzleCompleteState = new PuzzleCompleteState(this);
 
         _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>().Reverse());

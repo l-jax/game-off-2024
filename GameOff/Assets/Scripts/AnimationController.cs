@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour 
 {
+    [SerializeField]
     private Animation _animation;
 
     public void Start()
     {
-        _animation = GetComponent<Animation>();
-
-        GetComponentsInChildren<IPuzzle>().ToList()
+        GameObject.Find("GameController").GetComponentsInChildren<IPuzzle>().ToList()
             .ForEach(puzzle => puzzle.OnComplete += OnPuzzleComplete);
     }
 

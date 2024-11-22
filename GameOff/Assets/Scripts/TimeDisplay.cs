@@ -3,12 +3,8 @@ using UnityEngine;
 
 public class TimeDisplay : MonoBehaviour
 {
+    [SerializeField]
     private TextMeshPro _timeText;
-
-    public void Awake()
-    {
-        _timeText = GetComponent<TextMeshPro>();
-    }
 
     public void DisplayTime(float timeToDisplay)
     {
