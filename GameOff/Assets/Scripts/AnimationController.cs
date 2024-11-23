@@ -4,7 +4,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour 
 {
     [SerializeField]
-    private Animation _animation;
+    private Animator _animator;
 
     public void Start()
     {
@@ -14,7 +14,7 @@ public class AnimationController : MonoBehaviour
 
     private void OnPuzzleComplete(IPuzzle puzzle)
     {
-        _animation.Play(puzzle.Name);
+        _animator.Play(puzzle.Name);
         puzzle.OnComplete -= OnPuzzleComplete;
     }
 }
