@@ -16,7 +16,7 @@ public class StartState : IGameState
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetMouseButtonDown(0)) {
             Debug.Log("Starting game");
             _gameManager.StartGame();
         }
