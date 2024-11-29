@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public event Action OnGameEnd;
+
     public IGameState CurrentGameState { get; private set; }
     public IPuzzle CurrentPuzzle { get; private set; }
 
@@ -66,9 +68,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    internal void EndGame()
+    {
+        OnGameEnd?.Invoke();
+    }
+
     internal void TimeUp()
     {
-        CurrentGameState = _loseState;
+        TransitionTo(_loseState);
         Debug.Log("Time has run out");
     }
 

@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class AnimationController : MonoBehaviour 
+public class BoxAnimationController : MonoBehaviour 
 {
     [SerializeField]
     private Animator _animator;

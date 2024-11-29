@@ -41,7 +41,6 @@ public class CameraController : MonoBehaviour
 
     private void OnPuzzleStart(IPuzzle puzzle)
     {
-        //_mainCamera.transform.SetPositionAndRotation(puzzle.EmptyCameraTransform.position, puzzle.EmptyCameraTransform.rotation);
         _targetPosition = puzzle.EmptyCameraTransform.position;
         _isMoving = true;
     

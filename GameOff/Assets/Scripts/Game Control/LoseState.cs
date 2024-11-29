@@ -9,7 +9,7 @@ public class LoseState : IGameState
 
     public void Enter()
     {
-        // start the win thing
+        _gameManager.EndGame();
     }
 
     public void Update()
