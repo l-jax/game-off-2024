@@ -10,12 +10,13 @@ public class GameManager : MonoBehaviour
 
     public event Action OnGameEnd;
 
-    public IGameState CurrentGameState { get; private set; }
     public IPuzzle CurrentPuzzle { get; private set; }
+    public bool PuzzleActive { get => _currentGameState == _puzzleActiveState; }
 
     [SerializeField]
     private float _secondsBetweenPuzzles = 1f;
 
+    private IGameState _currentGameState;
     private Stack<IPuzzle> _puzzles;
     private StartState _startState;
     private PuzzleActiveState _puzzleActiveState;
@@ -40,12 +41,12 @@ public class GameManager : MonoBehaviour
 
     public void Update() 
     {
-        CurrentGameState.Update();
+        _currentGameState.Update();
     }
 
     internal void StartGame() 
     {
-        if (CurrentGameState != _startState) {
+        if (_currentGameState != _startState) {
             throw new InvalidOperationException("Game has already started");
         }
 
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialise()
     {
-        CurrentGameState = _startState;
+        _currentGameState = _startState;
         CurrentPuzzle = _puzzles.Pop();
         _startState.Enter();
         Debug.Log("Game Initialised");
@@ -87,14 +88,14 @@ public class GameManager : MonoBehaviour
 
     private void TransitionTo(IGameState nextState)
     {
-        Debug.Log($"Updating game state from { CurrentGameState } to { nextState }");
-        CurrentGameState = nextState;
+        Debug.Log($"Updating game state from { _currentGameState } to { nextState }");
+        _currentGameState = nextState;
         nextState.Enter();
     }
 
     private IEnumerator WaitThenNext() {
         yield return new WaitForSeconds(_secondsBetweenPuzzles);
-        
+
         if (_puzzles.Count == 0) {
             TransitionTo(_endState);
         } 

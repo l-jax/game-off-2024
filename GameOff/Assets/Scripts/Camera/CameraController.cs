@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     private Camera _mainCamera;
     private Vector2 _rotation = Vector2.zero;
     private bool _isMoving = false;
-    private bool _canLook = false;
     private Vector3 _targetPosition;
 
     public void Start()
@@ -24,12 +23,11 @@ public class CameraController : MonoBehaviour
             .ForEach(puzzle => puzzle.OnStart += OnPuzzleStart);
         
         _gameManager = GetComponent<GameManager>();
-        _gameManager.OnGameEnd += OnGameEnd;
     }
 
     public void Update()
     {
-        if (_canLook) {
+        if (_gameManager.PuzzleActive) {
             _rotation.y += Input.GetAxis ("Mouse X");
             _rotation.x += -Input.GetAxis ("Mouse Y");
             _mainCamera.transform.eulerAngles = _rotation * _lookSpeed;
@@ -48,13 +46,7 @@ public class CameraController : MonoBehaviour
     {
         _targetPosition = puzzle.EmptyCameraTransform.position;
         _isMoving = true;
-        _canLook = true;
     
         puzzle.OnStart -= OnPuzzleStart;
-    }
-
-    private void OnGameEnd()
-    {
-        _canLook = false;
     }
 }
