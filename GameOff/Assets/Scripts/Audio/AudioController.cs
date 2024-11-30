@@ -4,7 +4,7 @@ using UnityEngine;
 public class AudioController : MonoBehaviour 
 {
     [SerializeField]
-    private AudioClip _endGameClip;
+    private AudioSource _audioSourceEnd;
 
     [SerializeField]
     private AudioSource _audioSourceFx;
@@ -34,8 +34,7 @@ public class AudioController : MonoBehaviour
     private void OnGameOver(bool playerLost)
     {
         _audioSourceMusic.Stop();
-        _audioSourceMusic.clip = _endGameClip;
-        _audioSourceMusic.Play();
+        _audioSourceEnd.Play();
         _gameManager.OnGameOver -= OnGameOver;
     }
 }
