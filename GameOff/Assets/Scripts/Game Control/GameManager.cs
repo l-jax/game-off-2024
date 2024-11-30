@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     public IGameState CurrentGameState { get; private set; }
     public IPuzzle CurrentPuzzle { get; private set; }
+
+    [SerializeField]
+    private float _secondsBetweenPuzzles = 1f;
 
     private Stack<IPuzzle> _puzzles;
     private StartState _startState;
@@ -59,13 +63,7 @@ public class GameManager : MonoBehaviour
 
     internal void NextPuzzleOrEndGame()
     {
-        if (_puzzles.Count == 0) {
-            TransitionTo(_endState);
-        } 
-        else {
-            CurrentPuzzle = _puzzles.Pop();
-            TransitionTo(_puzzleActiveState);
-        }
+        StartCoroutine(WaitThenNext());
     }
 
     internal void EndGame()
@@ -92,5 +90,17 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Updating game state from { CurrentGameState } to { nextState }");
         CurrentGameState = nextState;
         nextState.Enter();
+    }
+
+    private IEnumerator WaitThenNext() {
+        yield return new WaitForSeconds(_secondsBetweenPuzzles);
+        
+        if (_puzzles.Count == 0) {
+            TransitionTo(_endState);
+        } 
+        else {
+            CurrentPuzzle = _puzzles.Pop();
+            TransitionTo(_puzzleActiveState);
+        }
     }
 }

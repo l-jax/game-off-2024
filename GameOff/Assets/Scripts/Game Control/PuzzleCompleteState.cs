@@ -9,13 +9,11 @@ public class PuzzleCompleteState : IGameState
 
     public void Enter()
     {
-        // start puzzle completion thing
+        _gameManager.NextPuzzleOrEndGame();
     }
 
     public void Update()
     {
-        // finish up the thing
-        // set next puzzle 
-        _gameManager.NextPuzzleOrEndGame();
+        
     }
 }
