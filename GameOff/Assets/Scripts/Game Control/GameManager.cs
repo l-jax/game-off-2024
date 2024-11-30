@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public event Action OnGameStart;
     public event Action OnGameEnd;
 
     public IPuzzle CurrentPuzzle { get; private set; }
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
             throw new InvalidOperationException("Game has already started");
         }
 
+        OnGameStart?.Invoke();
         TransitionTo(_puzzleActiveState);
     }
 
