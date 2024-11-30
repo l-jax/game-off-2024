@@ -24,6 +24,7 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
     public void Awake()
     {
         _startRotation = transform.rotation;
+        GameObject.FindWithTag("GameController").GetComponent<GameManager>().OnGameOver += OnGameOver;
     }
 
     public void OnValidate()
@@ -74,5 +75,11 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
     public void SetEnabled(bool enabled)
     {
         _enabled = enabled;
+    }
+
+    private void OnGameOver()
+    {
+        SetEnabled(false);
+        GameObject.FindWithTag("GameController").GetComponent<GameManager>().OnGameOver -= OnGameOver;
     }
 }
