@@ -10,12 +10,12 @@ public class MonsterAnimationController : MonoBehaviour
     public void Start()
     {
         _gameManager = GameObject.Find("GameController").GetComponent<GameManager>();
-        _gameManager.OnGameEnd += OnGameEnd;
+        _gameManager.OnGameOver += OnGameEnd;
     }
 
     private void OnGameEnd()
     {
         _animator.Play("End");
-        _gameManager.OnGameEnd -= OnGameEnd;
+        _gameManager.OnGameOver -= OnGameEnd;
     }
 }

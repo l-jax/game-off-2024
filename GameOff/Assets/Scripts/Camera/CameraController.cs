@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     private float _lookSpeed = 3;
     [SerializeField]
     private float _moveSpeed = 3;
+    [SerializeField]
+    private Transform _gameOverCameraLocation;
 
     private GameManager _gameManager;
     private Camera _mainCamera;
@@ -23,6 +25,7 @@ public class CameraController : MonoBehaviour
             .ForEach(puzzle => puzzle.OnStart += OnPuzzleStart);
         
         _gameManager = GetComponent<GameManager>();
+        _gameManager.OnGameOver += OnGameOver;
     }
 
     public void Update()
@@ -48,5 +51,12 @@ public class CameraController : MonoBehaviour
         _isMoving = true;
     
         puzzle.OnStart -= OnPuzzleStart;
+    }
+
+    private void OnGameOver()
+    {
+        _targetPosition = _gameOverCameraLocation.position;
+        _mainCamera.transform.rotation = _gameOverCameraLocation.rotation;
+        _isMoving = true;
     }
 }

@@ -15,7 +15,7 @@ public class ObjectController : MonoBehaviour
     {
         _gameManager = GetComponent<GameManager>();
         _gameManager.OnGameStart += OnGameStart;
-        _gameManager.OnGameEnd += OnGameEnd;
+        _gameManager.OnGameOver += OnGameEnd;
     }
 
     private void OnGameStart()
@@ -33,6 +33,6 @@ public class ObjectController : MonoBehaviour
         {
             item.SetActive(false);
         }
-        _gameManager.OnGameEnd -= OnGameEnd;
+        _gameManager.OnGameOver -= OnGameEnd;
     }
 }
