@@ -10,10 +10,10 @@ public class MonsterAnimationController : MonoBehaviour
     public void Start()
     {
         _gameManager = GameObject.Find("GameController").GetComponent<GameManager>();
-        _gameManager.OnGameOver += OnGameEnd;
+        _gameManager.OnGameOver += OnGameOver;
     }
 
-    private void OnGameEnd(bool playerLost)
+    private void OnGameOver(bool playerLost)
     {
         if (playerLost) {
             _animator.Play("Lose");
@@ -21,6 +21,6 @@ public class MonsterAnimationController : MonoBehaviour
             _animator.Play("Win");
         }
         
-        _gameManager.OnGameOver -= OnGameEnd;
+        _gameManager.OnGameOver -= OnGameOver;
     }
 }
