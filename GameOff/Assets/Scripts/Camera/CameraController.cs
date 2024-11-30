@@ -58,5 +58,6 @@ public class CameraController : MonoBehaviour
         _targetPosition = _gameOverCameraLocation.position;
         _mainCamera.transform.rotation = _gameOverCameraLocation.rotation;
         _isMoving = true;
+        _gameManager.OnGameOver -= OnGameOver;
     }
 }
