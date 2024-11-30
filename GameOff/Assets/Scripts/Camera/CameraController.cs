@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
         puzzle.OnStart -= OnPuzzleStart;
     }
 
-    private void OnGameOver()
+    private void OnGameOver(bool playerLost)
     {
         _targetPosition = _gameOverCameraLocation.position;
         _mainCamera.transform.rotation = _gameOverCameraLocation.rotation;

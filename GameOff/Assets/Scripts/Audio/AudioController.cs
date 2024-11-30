@@ -4,15 +4,22 @@ using UnityEngine;
 public class AudioController : MonoBehaviour 
 {
     [SerializeField]
+    private AudioClip _endGameClip;
+
+    [SerializeField]
     private AudioSource _audioSourceFx;
 
     [SerializeField]
     private AudioSource _audioSourceMusic;
+    private GameManager _gameManager;
 
     public void Start()
     {
         GetComponentsInChildren<IPuzzle>().ToList()
             .ForEach(puzzle => puzzle.OnComplete += OnPuzzleComplete);
+
+        _gameManager = GameObject.Find("GameController").GetComponent<GameManager>();
+        _gameManager.OnGameOver += OnGameOver;
         
         _audioSourceMusic.loop = true;
         _audioSourceMusic.Play();
@@ -22,5 +29,13 @@ public class AudioController : MonoBehaviour
     {
         _audioSourceFx.Play();
         puzzle.OnComplete -= OnPuzzleComplete;
+    }
+
+    private void OnGameOver(bool playerLost)
+    {
+        _audioSourceMusic.Stop();
+        _audioSourceMusic.clip = _endGameClip;
+        _audioSourceMusic.Play();
+        _gameManager.OnGameOver -= OnGameOver;
     }
 }

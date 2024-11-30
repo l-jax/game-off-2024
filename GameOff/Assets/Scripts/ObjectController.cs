@@ -27,7 +27,7 @@ public class ObjectController : MonoBehaviour
         _gameManager.OnGameStart -= OnGameStart;
     }
 
-    private void OnGameEnd()
+    private void OnGameEnd(bool playerLost)
     {
         foreach (GameObject item in _objectsToInactivateOnEnd)
         {

@@ -77,7 +77,7 @@ public class RotatingPuzzleComponent : MonoBehaviour, IPuzzleComponent
         _enabled = enabled;
     }
 
-    private void OnGameOver()
+    private void OnGameOver(bool playerLost)
     {
         SetEnabled(false);
         GameObject.FindWithTag("GameController").GetComponent<GameManager>().OnGameOver -= OnGameOver;

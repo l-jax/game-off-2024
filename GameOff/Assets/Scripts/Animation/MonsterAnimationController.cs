@@ -13,9 +13,14 @@ public class MonsterAnimationController : MonoBehaviour
         _gameManager.OnGameOver += OnGameEnd;
     }
 
-    private void OnGameEnd()
+    private void OnGameEnd(bool playerLost)
     {
-        _animator.Play("End");
+        if (playerLost) {
+            _animator.Play("Lose");
+        } else {
+            _animator.Play("Win");
+        }
+        
         _gameManager.OnGameOver -= OnGameEnd;
     }
 }

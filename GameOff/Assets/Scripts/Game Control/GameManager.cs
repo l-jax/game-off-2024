@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public event Action OnGameStart;
-    public event Action OnGameOver;
+    public event Action<bool> OnGameOver;
 
     public IPuzzle CurrentPuzzle { get; private set; }
     public bool CameraActive { get => 
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     internal void EndGame()
     {
-        OnGameOver?.Invoke();
+        OnGameOver?.Invoke(_currentGameState == _loseState);
     }
 
     internal void TimeUp()
