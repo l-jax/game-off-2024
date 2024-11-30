@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float _secondsBetweenPuzzles = 1f;
+    [SerializeField]
+    private float _totalTimeSeconds = 60f;
 
     private IGameState _currentGameState;
     private Stack<IPuzzle> _puzzles;
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
         _startState = new StartState(this);
         _endState = new EndState(this);
         _loseState = new LoseState(this);
-        _puzzleActiveState = new PuzzleActiveState(this, GetComponent<TimeDisplay>());
+        _puzzleActiveState = new PuzzleActiveState(this, GetComponent<TimeDisplay>(), _totalTimeSeconds);
         _puzzleCompleteState = new PuzzleCompleteState(this);
 
         _puzzles = new Stack<IPuzzle>(GetComponentsInChildren<IPuzzle>().Reverse());

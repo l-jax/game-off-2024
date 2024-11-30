@@ -5,11 +5,12 @@ public class PuzzleActiveState : IGameState
     private readonly GameManager _gameManager;
     private readonly TimeDisplay _timeDisplay;
 
-    private float _timeRemainingSeconds = 60;
+    private float _timeRemainingSeconds;
 
-    public PuzzleActiveState(GameManager manager, TimeDisplay timeDisplay) 
+    public PuzzleActiveState(GameManager manager, TimeDisplay timeDisplay, float timeRemainingSeconds) 
     {
         _gameManager = manager;
+        _timeRemainingSeconds = timeRemainingSeconds;
         _timeDisplay = timeDisplay;
     }
 
