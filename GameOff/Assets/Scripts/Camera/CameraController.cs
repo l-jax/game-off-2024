@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour
         _mainCamera = Camera.main;
         _targetPosition = _mainCamera.transform.position;
 
+        Cursor.lockState = CursorLockMode.Confined;
+
         GetComponentsInChildren<IPuzzle>().ToList()
             .ForEach(puzzle => puzzle.OnStart += OnPuzzleStart);
         
