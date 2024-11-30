@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     public void Update()
     {
-        if (_gameManager.PuzzleActive) {
+        if (_gameManager.CameraActive) {
             _rotation.y += Input.GetAxis ("Mouse X");
             _rotation.x += -Input.GetAxis ("Mouse Y");
             _mainCamera.transform.eulerAngles = _rotation * _lookSpeed;

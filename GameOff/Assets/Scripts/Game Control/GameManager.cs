@@ -12,7 +12,10 @@ public class GameManager : MonoBehaviour
     public event Action OnGameEnd;
 
     public IPuzzle CurrentPuzzle { get; private set; }
-    public bool PuzzleActive { get => _currentGameState == _puzzleActiveState; }
+    public bool CameraActive { get => 
+        _currentGameState == _puzzleActiveState ||
+        _currentGameState == _puzzleCompleteState; 
+    }
 
     [SerializeField]
     private float _secondsBetweenPuzzles = 1f;
