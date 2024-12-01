@@ -1,10 +1,10 @@
-# Game Off 2024 Entry WIP
+# Game Off 2024 Entry
 
 ## What?
 
-We're building a game for [Game Off 2024](https://itch.io/jam/game-off-2024)
+We built a game for [Game Off 2024](https://itch.io/jam/game-off-2024)
 
-The theme is __SECRETS__ 
+The theme was __SECRETS__ 
 
 ## Who?
 
@@ -14,4 +14,8 @@ The theme is __SECRETS__
 
 ## When?
 
-Come back on the 1st of December 2024 :christmas_tree:
+We made this game in November 2024 :christmas_tree:
+
+## Where?
+
+You can play the game on Itch https://rob-jaques.itch.io/deep-secrets
